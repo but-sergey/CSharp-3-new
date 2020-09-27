@@ -1,0 +1,6 @@
+﻿namespace MailSender
+{
+    class EmailSendService
+    {
+    }
+}
