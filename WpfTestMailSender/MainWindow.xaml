@@ -57,6 +57,6 @@
         <Button x:Name="btnSendMail" Content="Отправить письмо"
                 Grid.Row="5" Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" VerticalAlignment="Top"
-                Width="124" Click="btnSendMail_Click"/>
+                Width="170" Click="btnSendMail_Click"/>
     </Grid>
 </Window>
