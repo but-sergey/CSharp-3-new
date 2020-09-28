@@ -38,5 +38,10 @@ namespace MailSender
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void OnOpenSchedulerClick(object sender, RoutedEventArgs e)
+        {
+            MainTabConlrol.SelectedIndex = 1;
+        }
     }
 }
