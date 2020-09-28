@@ -1,10 +1,10 @@
 ﻿<Window x:Class="MailSender.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:MailSender"
-        mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -42,9 +42,12 @@
                                 <ComboBoxItem>smtp.gmail.com</ComboBoxItem>
                                 <ComboBoxItem>smtp.mail.ru</ComboBoxItem>
                             </ComboBox>
-                            <Button Content="Add"/>
-                            <Button Content="Edit"/>
-                            <Button Content="Del"/>
+                            <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="DarkBlue"
+                                    ToolTip="Добавить"/>
+                            <Button fa:Awesome.Content="Solid_Edit" Foreground="DarkOrange"
+                                    ToolTip="Редактировать"/>
+                            <Button fa:Awesome.Content="Solid_TrashAlt" Foreground="DarkRed"
+                                    ToolTip="Удалить"/>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
                             <ComboBox MinWidth="120" MaxWidth="200"
@@ -53,17 +56,23 @@
                                 <ComboBoxItem>Петров</ComboBoxItem>
                                 <ComboBoxItem>Сидоров</ComboBoxItem>
                             </ComboBox>
-                            <Button Content="Add"/>
-                            <Button Content="Edit"/>
-                            <Button Content="Del"/>
+                            <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="DarkBlue"
+                                    ToolTip="Добавить"/>
+                            <Button fa:Awesome.Content="Solid_Edit" Foreground="DarkOrange"
+                                    ToolTip="Редактировать"/>
+                            <Button fa:Awesome.Content="Solid_TrashAlt" Foreground="DarkRed"
+                                    ToolTip="Удалить"/>
                         </ToolBar>
                         <ToolBar Header="Перейти в планировщик" Band="0">
-                            <Button>Перейти</Button>
+                            <Button fa:Awesome.Content="Regular_Clock" Foreground="DarkBlue"/>
                         </ToolBar>
                         <ToolBar Header="Получатели" Band="1">
-                            <Button Content="Add"/>
-                            <Button Content="Edit"/>
-                            <Button Content="Del"/>
+                            <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="DarkBlue"
+                                    ToolTip="Добавить"/>
+                            <Button fa:Awesome.Content="Solid_Edit" Foreground="DarkOrange"
+                                    ToolTip="Редактировать"/>
+                            <Button fa:Awesome.Content="Solid_TrashAlt" Foreground="DarkRed"
+                                    ToolTip="Удалить"/>
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Header="Список получателей">
