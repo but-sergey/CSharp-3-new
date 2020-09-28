@@ -19,6 +19,14 @@ namespace MailSender
             if (!(ServersList.SelectedItem is Server server)) return;
             if (!(MessagesList.SelectedItem is Message message)) return;
 
+            if(string.IsNullOrWhiteSpace(message.Body))
+            {
+                MessageBox.Show("Письмо не заполнено!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MainTabConlrol.SelectedItem = MessagesTab;
+                return;
+            }
+
             var send_service = new MailSenderService
             {
                 ServerAddress = server.Address,
@@ -41,7 +49,7 @@ namespace MailSender
 
         private void OnOpenSchedulerClick(object sender, RoutedEventArgs e)
         {
-            MainTabConlrol.SelectedIndex = 1;
+            MainTabConlrol.SelectedItem = SchedulerTab;
         }
     }
 }
