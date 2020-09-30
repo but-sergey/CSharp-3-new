@@ -5,58 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTestMailServer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen"
-        Initialized="Window_Initialized">
-    <Window.Resources>
-
-    </Window.Resources>
+        Title="{Binding X, ElementName=Translator}" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition MinHeight="24" MaxHeight="100"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Foreground="Black" 
-               VerticalAlignment="Center" HorizontalAlignment="Left"
-               Content="Логин:"/>
-        <Label Grid.Row="1" Grid.Column="0" Foreground="Black" 
-               VerticalAlignment="Center" HorizontalAlignment="Left"
-               Content="Пароль:"/>
-        <Label Grid.Row="2" Grid.Column="0" Foreground="Black"
-               VerticalAlignment="Center" HorizontalAlignment="Left"
-               Content="Кому:"/>
-        <Label Grid.Row="3" Grid.Column="0" Foreground="Black" 
-               VerticalAlignment="Center" HorizontalAlignment="Left"
-               Content="Тема письма:"/>
-        <Label Grid.Row="4" Grid.Column="0" Foreground="Black" 
-               VerticalAlignment="Top" HorizontalAlignment="Left"
-               Content="Текст письма:"/>
-
-        <TextBox x:Name="txtLogin"
-                   Grid.Row="0" Grid.Column="1"
-                   VerticalAlignment="Center"/>
-        <PasswordBox x:Name="passwordBox"
-                     Grid.Row="1" Grid.Column="1"
-                     VerticalAlignment="Center"/>
-        <TextBox x:Name="txtTo"
-                 Grid.Row="2" Grid.Column="1"
-                 VerticalAlignment="Center"/>
-        <TextBox x:Name="txtSubject"
-                   Grid.Row="3" Grid.Column="1"
-                   VerticalAlignment="Center"/>
-        <TextBox x:Name="txtMailBody"
-                   Grid.Row="4" Grid.Column="1"/>
-
-        <Button x:Name="btnSendMail" Content="Отправить письмо"
-                Grid.Row="5" Grid.ColumnSpan="2"
-                HorizontalAlignment="Center" VerticalAlignment="Top"
-                Width="170" Click="btnSendMail_Click"/>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="140" Margin="80,30,0,0"
+                 Text="{Binding Angle, ElementName=Rotator}"/>
+        <Slider VerticalAlignment="Top" HorizontalAlignment="Left" Width="140" Margin="250,30,0,0"
+                Maximum="600"
+                Value="{Binding X, ElementName=Translator}"/>
+        <Slider VerticalAlignment="Top" HorizontalAlignment="Left" Width="140" Margin="450,30,0,0"
+                Minimum="-180" Maximum="180"
+                Value="{Binding Angle, ElementName=Rotator}"/>
+        
+        <Ellipse Fill="DarkBlue"  Stroke="Red" StrokeThickness="4"
+                 VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Height="40" Margin="90,80,0,0"
+                 RenderTransformOrigin="0.5,0.5">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform X="0" x:Name="Translator"/>
+                    <RotateTransform Angle="0" x:Name="Rotator"/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
     </Grid>
 </Window>
