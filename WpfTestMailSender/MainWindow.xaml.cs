@@ -27,7 +27,7 @@ namespace WpfTestMailServer
                 SendEndWindow sendEndWindow = new SendEndWindow();
                 sendEndWindow.ShowDialog();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 SendErrorWindow sendErrorWindow = new SendErrorWindow();
                 sendErrorWindow.ShowDialog();
