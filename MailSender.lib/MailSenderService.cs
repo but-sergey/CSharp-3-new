@@ -14,34 +14,6 @@ namespace MailSender.lib
 
         public void SendMessage(string SenderAddress, string RecipientAddress, string Subject, string Body)
         {
-            var from = new MailAddress(SenderAddress);
-            var to = new MailAddress(RecipientAddress);
-
-            using (var message = new MailMessage(from, to))
-            {
-                message.Subject = Subject;
-                message.Body = Body;
-
-                using (var client = new SmtpClient(ServerAddress, ServerPort))
-                {
-                    client.EnableSsl = UseSSL;
-
-                    client.Credentials = new NetworkCredential
-                    {
-                        UserName = Login,
-                        Password = Password
-                    };
-                    try
-                    {
-                        client.Send(message);
-                    }
-                    catch(SmtpException e)
-                    {
-                        Trace.TraceError(e.ToString());
-                        throw;
-                    }
-                }
-            }
         }
     }
 }
