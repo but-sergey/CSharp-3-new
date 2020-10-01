@@ -73,7 +73,7 @@
                                     ToolTip="Удалить"/>
                         </ToolBar>
                         <ToolBar Header="Перейти в планировщик" Band="0">
-                            <Button fa:Awesome.Content="Regular_Clock" Foreground="DarkBlue" Click="OnOpenSchedulerClick"/>
+                            <Button fa:Awesome.Content="Regular_Clock" Foreground="DarkBlue"/>
                         </ToolBar>
                         <ToolBar Header="Получатели" Band="1">
                             <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="DarkBlue"
@@ -116,7 +116,7 @@
                                         <Setter Property="Background" Value="White"/>
                                     </Style>
                                 </StackPanel.Resources>
-                                <Button Content="Отправить" Click="OnSendButtonClick"/>
+                                <Button Content="Отправить"/>
                                 <Button Content="Запланировать"/>
                             </StackPanel>
                         </StackPanel>
