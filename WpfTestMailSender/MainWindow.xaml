@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="{Binding X, ElementName=Translator}" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        xmlns:vm="clr-namespace:WpfTest.ViewModels"
+        Title="{Binding Title}" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
         <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="140" Margin="80,30,0,0"
-                 Text="{Binding Angle, ElementName=Rotator}"/>
+                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
         <Slider VerticalAlignment="Top" HorizontalAlignment="Left" Width="140" Margin="250,30,0,0"
                 Maximum="600"
                 Value="{Binding X, ElementName=Translator}"/>
