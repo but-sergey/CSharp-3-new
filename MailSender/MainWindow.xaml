@@ -48,11 +48,12 @@
                                       SelectedValuePath="Address">
                             </ComboBox>
                             <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="DarkBlue"
-                                    ToolTip="Добавить"/>
+                                    ToolTip="Добавить" Command="{Binding CreateNewServerCommand}"
+                                    CommandParameter="{Binding SelectedServer}"/>
                             <Button fa:Awesome.Content="Solid_Edit" Foreground="DarkOrange"
-                                    ToolTip="Редактировать"/>
+                                    ToolTip="Редактировать" Command="{Binding EditServerCommand}"/>
                             <Button fa:Awesome.Content="Solid_TrashAlt" Foreground="DarkRed"
-                                    ToolTip="Удалить"/>
+                                    ToolTip="Удалить" Command="{Binding DeleteServerCommand}"/>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
                             <ComboBox Name="SendersList" MinWidth="120" MaxWidth="200"
