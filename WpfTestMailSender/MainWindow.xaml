@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
-        mc:Ignorable="d"
         xmlns:vm="clr-namespace:WpfTest.ViewModels"
+        xmlns:commands="clr-namespace:WpfTest.Infrastructure.Commands"
+        mc:Ignorable="d"
         Title="{Binding Title}" Height="450" Width="800" WindowStartupLocation="CenterScreen"
         Topmost="{Binding IsChecked, ElementName=IsWindowTopMost}">
     <Window.DataContext>
@@ -39,6 +40,13 @@
                   Margin="200,0"
                   Name="IsWindowTopMost"/>
         <Button Content="Close Window" VerticalAlignment="Top" HorizontalAlignment="Left"
-                Margin="20,60"/>
+                Margin="20,60">
+            <Button.Command>
+                <commands:CloseWindowCommand/>
+            </Button.Command>
+        </Button>
+        <Button Content="Hello World!" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Margin="120,60" Command="{Binding ShowDialogCommand}">
+        </Button>
     </Grid>
 </Window>

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
+using System.Windows.Input;
+using WpfTest.Infrastructure.Commands;
 using WpfTest.ViewModels.Base;
 
 namespace WpfTest.ViewModels
@@ -29,6 +32,16 @@ namespace WpfTest.ViewModels
         public DateTime CurrentTime => DateTime.Now;
 
         private readonly Timer _Timer;
+
+        private ICommand _ShowDialogCommand;
+
+        public ICommand ShowDialogCommand => _ShowDialogCommand
+            ??= new LambdaCommand(OnShowDialogCommandExecute);
+
+        private void OnShowDialogCommandExecute(object p)
+        {
+            MessageBox.Show("Hello World!");
+        }
 
         private bool _TimerEnabled = true;
 
