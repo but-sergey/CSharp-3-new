@@ -50,5 +50,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MailSender.lib\MailSender.lib.csproj">
+      <Project>{dfeba05e-fef6-422a-9866-313704e8750c}</Project>
+      <Name>MailSender.lib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
