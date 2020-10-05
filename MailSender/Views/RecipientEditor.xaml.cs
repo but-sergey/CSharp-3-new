@@ -2,20 +2,17 @@
 
 namespace MailSender.Views
 {
-    /// <summary>
-    /// Interaction logic for RecipientEditor.xaml
-    /// </summary>
     public partial class RecipientEditor : UserControl
     {
         public RecipientEditor() => InitializeComponent();
 
         private void OnDataValidationError(object? Sender, ValidationErrorEventArgs E)
         {
-            var control = (Control)E.OriginalSource;
-            if (E.Action == ValidationErrorEventAction.Added)
-                control.ToolTip = E.Error.ErrorContent.ToString();
-            else
-                control.ClearValue(ToolTipProperty);
+            //var control = (Control)E.OriginalSource;
+            //if (E.Action == ValidationErrorEventAction.Added)
+            //    control.ToolTip = E.Error.ErrorContent.ToString();
+            //else
+            //    control.ClearValue(ToolTipProperty);
         }
     }
 }
