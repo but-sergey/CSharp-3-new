@@ -1,5 +1,5 @@
 ﻿using MailSender.Infrastructure.Commands;
-using MailSender.Models;
+using MailSender.lib.Models;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;

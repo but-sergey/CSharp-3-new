@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:MailSender.Data"
-        xmlns:m="clr-namespace:MailSender.Models"
         xmlns:v="clr-namespace:MailSender.Views"
         xmlns:local="clr-namespace:MailSender"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
