@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{15244BBA-D51B-4723-8216-736065488A2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTestMailSender", "WpfTestMailSender\WpfTestMailSender.csproj", "{ABA9D737-9B43-47FA-9EB3-A3D1BEA8E5CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTest", "WpfTestMailSender\WpfTest.csproj", "{ABA9D737-9B43-47FA-9EB3-A3D1BEA8E5CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailSender", "MailSender\MailSender.csproj", "{E2F6DC10-4A1E-4706-9A72-2149C98F4233}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSender.lib", "MailSender.lib\MailSender.lib.csproj", "{DFEBA05E-FEF6-422A-9866-313704E8750C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailSender.lib", "MailSender.lib\MailSender.lib.csproj", "{DFEBA05E-FEF6-422A-9866-313704E8750C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{11A905B3-F6C8-4CB9-AFC5-EA798CAD8FCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15244BBA-D51B-4723-8216-736065488A2B} = {11A905B3-F6C8-4CB9-AFC5-EA798CAD8FCC}
+		{ABA9D737-9B43-47FA-9EB3-A3D1BEA8E5CC} = {11A905B3-F6C8-4CB9-AFC5-EA798CAD8FCC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60D82D1B-85C9-476D-9520-22C194AD835B}
