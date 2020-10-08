@@ -1,6 +1,5 @@
-﻿using System;
-using System.Net;
-using System.Net.Mail;
+﻿using MailSender.lib.Interfaces;
+using MailSender.lib.Service;
 
 namespace TestConsole
 {
@@ -8,35 +7,13 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            MailMessage mailMessage = new MailMessage(Settings.FromMail, Settings.ToMail);
-            mailMessage.Subject = "Пробное письмо";
-            mailMessage.Body = "Содержимое пробного письма";
-            mailMessage.IsBodyHtml = false;
+            IEncryptorService cryptor = new Rfc2898Encryptor();
+            var str = "Hello World!";
+            const string password = "MailSender!";
 
-            SmtpClient client = new SmtpClient(Settings.SmtpServer, Settings.SmtpPort);
-            client.EnableSsl = true;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            var password = Settings.SenderPassword;
-            if (password == string.Empty)
-            {
-                Console.Write("Пароль для доступа к аккаунту отправки писем: ");
-                password = Console.ReadLine();
-            }
-            client.Credentials = new NetworkCredential(Settings.SenderName, password);
+            var crypted_str = cryptor.Encrypt(str, password);
 
-            try
-            {
-                client.Send(mailMessage);
-                Console.WriteLine($"Письмо от {Settings.FromMail} на адрес {Settings.ToMail} отправлено.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Невозможно отправить письмо ({ex.Message})");
-            }
-
-            Console.Write("\nНажмите любую клавишу для выхода...");
-            Console.ReadKey();
+            var decrypted_str = cryptor.Decrypt(crypted_str, password);
         }
     }
 }
