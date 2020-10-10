@@ -1,5 +1,5 @@
-﻿using MailSender.lib.Interfaces;
-using MailSender.lib.Service;
+﻿using System;
+using System.Threading;
 
 namespace TestConsole
 {
@@ -7,13 +7,42 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            IEncryptorService cryptor = new Rfc2898Encryptor();
-            var str = "Hello World!";
-            const string password = "MailSender!";
+            var main_thread = Thread.CurrentThread;
+            var main_thread_id = main_thread.ManagedThreadId;
 
-            var crypted_str = cryptor.Encrypt(str, password);
+            main_thread.Name = "Главный поток!";
 
-            var decrypted_str = cryptor.Decrypt(crypted_str, password);
+            //TimerMethod();
+            var timer_thread = new Thread(TimerMethod);
+            timer_thread.Name = "Поток часов";
+            timer_thread.IsBackground = true;
+            timer_thread.Start();
+
+            for(var i = 0; i < 10; i++)
+            {
+                Console.WriteLine($"Главный поток {i}");
+                Thread.Sleep(10);
+            }
+
+            Console.WriteLine("Главный поток работу закончил!");
+            Console.ReadLine();
+        }
+
+        private static void TimerMethod()
+        {
+            PrintThreadInfo();
+            while (true)
+            {
+                Console.Title = DateTime.Now.ToString("HH:mm:ss.ffff");
+                Thread.Sleep(100);
+                //Thread.SpinWait(10);
+            }
+        }
+
+        private static void PrintThreadInfo()
+        {
+            var thread = Thread.CurrentThread;
+            Console.WriteLine($"id:{thread.ManagedThreadId}; name:{thread.Name}; priority:{thread.Priority}");
         }
     }
 }
