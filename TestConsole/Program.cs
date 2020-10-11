@@ -18,12 +18,17 @@ namespace TestConsole
             timer_thread.IsBackground = true;
             timer_thread.Start();
 
-            var printer_thread = new Thread(PrintMessage)
-            {
-                IsBackground = true,
-                Name = "Parameter Printer"
-            };
-            printer_thread.Start("Hello World!");
+            //var printer_thread = new Thread(PrintMessage)
+            //{
+            //    IsBackground = true,
+            //    Name = "Parameter Printer"
+            //};
+            //printer_thread.Start("Hello World!");
+
+            var message = "Hello World!";
+            var count = 10;
+
+            new Thread(() => PrintMessage(message, count)) { IsBackground = true }.Start();
 
             //for(var i = 0; i < 10; i++)
             //{
@@ -35,15 +40,14 @@ namespace TestConsole
             Console.ReadLine();
         }
 
-        private static void PrintMessage(object parameter)
+        private static void PrintMessage(string Message, int Count)
         {
             PrintThreadInfo();
 
-            var msg = (string)parameter;
             var thread_id = Thread.CurrentThread.ManagedThreadId;
-            for(var i = 0; i < 10; i++)
+            for(var i = 0; i < Count; i++)
             {
-                Console.WriteLine($"id:{thread_id}\t{msg}");
+                Console.WriteLine($"id:{thread_id}\t{Message}");
                 Thread.Sleep(10);
             }
         }
