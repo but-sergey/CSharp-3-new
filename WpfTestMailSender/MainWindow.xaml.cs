@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace WpfTest
 {
@@ -13,8 +14,16 @@ namespace WpfTest
             new Thread(() =>
             {
                 var result = GetResultHard();
-                Application.Current.Dispatcher.Invoke(() => ResultText.Text = result);
+                UpdateResultValue(result);
             }){ IsBackground = true }.Start();
+        }
+
+        private void UpdateResultValue(string Result)
+        {
+            if (Dispatcher.CheckAccess())
+                ResultText.Text = Result;
+            else
+                Dispatcher.Invoke(() => UpdateResultValue(Result));
         }
 
         private string GetResultHard()
