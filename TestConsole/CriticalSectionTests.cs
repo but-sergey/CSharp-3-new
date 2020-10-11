@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Remoting.Contexts;
 using System.Threading;
 
 namespace TestConsole
@@ -30,28 +32,43 @@ namespace TestConsole
         {
             for(var i = 0; i < Count; i++)
             {
-                //lock (__SyncRoot)
-                //{
-                //    Console.Write($"Thread id:{Thread.CurrentThread.ManagedThreadId}");
-                //    Console.Write("\t");
-                //    Console.Write(Message);
-                //    Console.WriteLine();
-                //}
-
-                Monitor.Enter(__SyncRoot);
-                try
+                lock (__SyncRoot)
                 {
                     Console.Write($"Thread id:{Thread.CurrentThread.ManagedThreadId}");
                     Console.Write("\t");
                     Console.Write(Message);
                     Console.WriteLine();
                 }
-                finally
-                {
-                    Monitor.Exit(__SyncRoot);
-                }
+
+                //Monitor.Enter(__SyncRoot);
+                //try
+                //{
+                //    Console.Write($"Thread id:{Thread.CurrentThread.ManagedThreadId}");
+                //    Console.Write("\t");
+                //    Console.Write(Message);
+                //    Console.WriteLine();
+                //}
+                //finally
+                //{
+                //    Monitor.Exit(__SyncRoot);
+                //}
 
             }
+        }
+    }
+
+    [Synchronization]
+    public class FileLogger : ContextBoundObject
+    {
+        private readonly string _LogFileName;
+        public FileLogger(string LogFileName)
+        {
+            _LogFileName = LogFileName;
+        }
+
+        public void Log(string Message)
+        {
+            File.WriteAllText(_LogFileName, Message);
         }
     }
 }
