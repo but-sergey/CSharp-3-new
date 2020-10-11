@@ -9,7 +9,29 @@ namespace TestConsole
     {
         public static void Start()
         {
-            LockSynchronizationTest();
+            //LockSynchronizationTest();
+
+            var manual_reset_event = new ManualResetEvent(false);
+            var auto_reset_event = new AutoResetEvent(false);
+
+            EventWaitHandle starter = auto_reset_event;
+
+            for(var i = 0; i < 10; i++)
+            {
+                var local_i = i;
+                new Thread(() =>
+                {
+                    Console.WriteLine($"Поток {local_i} запущен");
+                    starter.WaitOne();
+                    Console.WriteLine($"Поток {local_i} завершил свою работу");
+                }).Start();
+            }
+
+            Console.WriteLine("Все потоки созданы и готовы к работе.");
+            Console.ReadLine();
+            starter.Set();
+
+            Console.ReadLine();
         }
 
         private static void LockSynchronizationTest()
