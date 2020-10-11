@@ -28,7 +28,10 @@ namespace TestConsole
             var message = "Hello World!";
             var count = 10;
 
-            new Thread(() => PrintMessage(message, count)) { IsBackground = true }.Start();
+            //new Thread(() => PrintMessage(message, count)) { IsBackground = true }.Start();
+
+            var print_tast = new PrintMessageTask(message, count);
+            print_tast.Start();
 
             //for(var i = 0; i < 10; i++)
             //{
@@ -68,6 +71,38 @@ namespace TestConsole
         {
             var thread = Thread.CurrentThread;
             Console.WriteLine($"id:{thread.ManagedThreadId}; name:{thread.Name}; priority:{thread.Priority}");
+        }
+    }
+
+    class PrintMessageTask
+    {
+        private readonly string _Message;
+        private readonly int _Count;
+        private Thread _Thread;
+
+        public PrintMessageTask(string Message, int Count)
+        {
+            _Message = Message;
+            _Count = Count;
+            _Thread = new Thread(ThreadMethod) { IsBackground = true };
+        }
+
+        public void Start()
+        {
+            if (_Thread?.IsAlive == false)
+                _Thread?.Start();
+        }
+
+        private void ThreadMethod()
+        {
+            var thread_id = _Thread.ManagedThreadId;
+            for(var i = 0; i < _Count; i++)
+            {
+                Console.WriteLine($"id:{thread_id}\t{_Message}");
+                Thread.Sleep(10);
+            }
+
+            _Thread = null;
         }
     }
 }
