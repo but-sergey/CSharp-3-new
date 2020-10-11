@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,7 +39,11 @@ namespace TestConsole
 
             //Console.WriteLine($"Факториал {factorial.Result}, сумма {sum.Result}");
 
-            Action<string> printer = str => Console.WriteLine($"Сообщшение [th id:{Thread.CurrentThread.ManagedThreadId}] {str}");
+            Action<string> printer = str =>
+            {
+                Console.WriteLine($"Сообщшение [th id:{Thread.CurrentThread.ManagedThreadId}] {str}");
+                Thread.Sleep(100);
+            };
 
             printer("Hello World!");
             printer.Invoke("123");
@@ -58,12 +63,50 @@ namespace TestConsole
 
             /* ------------------------------------------------- */
 
-            Parallel.Invoke(
-                new ParallelOptions { MaxDegreeOfParallelism = 2 },
-                ParallelInvokeMethod,
-                ParallelInvokeMethod,
-                ParallelInvokeMethod,
-                () => Console.WriteLine("Ещё один метод..."));
+            //Parallel.Invoke(
+            //    new ParallelOptions { MaxDegreeOfParallelism = 2 },
+            //    ParallelInvokeMethod,
+            //    ParallelInvokeMethod,
+            //    ParallelInvokeMethod,
+            //    () => Console.WriteLine("Ещё один метод..."));
+
+            //Parallel.For(0, 100, i => printer(i.ToString()));
+            //Parallel.For(0, 100, new ParallelOptions { MaxDegreeOfParallelism = 2 }, i => printer(i.ToString()));
+            //var result = Parallel.For(0, 100, new ParallelOptions { MaxDegreeOfParallelism = 2 }, (i, state) =>
+            //{
+            //    printer(i.ToString());
+            //    if (i > 10) state.Break();
+            //});
+            //Console.WriteLine($"Выполнено {result.LowestBreakIteration} итераций");
+
+            var messages = Enumerable.Range(1, 500).Select(i => $"Message {i}");//.ToArray();
+
+            //Parallel.ForEach(messages, message => printer(message));
+            //Parallel.ForEach(messages, new ParallelOptions { MaxDegreeOfParallelism = 2 }, message => printer(message));
+
+            //foreach (var message in messages.Where(msg => msg.EndsWith("0")))
+            //    printer(message);
+
+            //messages
+            //    .Where(msg => msg.EndsWith("0"))
+            //    .ToList()
+            //    .ForEach(msg => printer(msg));
+
+            //var cancelation = new CancellationTokenSource();
+            ////cancelation.Token.ThrowIfCancellationRequested();
+            //var message_count = messages
+            //    .AsParallel()
+            //    .WithDegreeOfParallelism(2)
+            //    .WithCancellation(cancelation.Token)
+            //    .WithExecutionMode(ParallelExecutionMode.ForceParallelism)
+            //    .Where(msg =>
+            //    {
+            //        printer(msg);
+            //        return msg.EndsWith("0");
+            //    })
+            //    .AsSequential()
+            //    .Count();
+
 
             Console.WriteLine("Главный поток работу закончил!");
             Console.ReadLine();
