@@ -33,6 +33,19 @@ namespace TestConsole
             starter.Set();
 
             Console.ReadLine();
+
+            //var mutex1 = new Mutex(true, "Тестовый мютекс", out var created1);
+            //var mutex2 = new Mutex(true, "Тестовый мютекс", out var created2);
+
+            //mutex1.WaitOne();
+            //mutex1.WaitOne();
+            //mutex1.ReleaseMutex();
+
+            //var semaphore = new Semaphore(0, 10);
+
+            //semaphore.WaitOne();
+
+            //semaphore.Release();
         }
 
         private static void LockSynchronizationTest()
