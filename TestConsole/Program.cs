@@ -18,19 +18,40 @@ namespace TestConsole
             timer_thread.IsBackground = true;
             timer_thread.Start();
 
-            for(var i = 0; i < 10; i++)
+            var printer_thread = new Thread(PrintMessage)
             {
-                Console.WriteLine($"Главный поток {i}");
-                Thread.Sleep(10);
-            }
+                IsBackground = true,
+                Name = "Parameter Printer"
+            };
+            printer_thread.Start("Hello World!");
+
+            //for(var i = 0; i < 10; i++)
+            //{
+            //    Console.WriteLine($"Главный поток {i}");
+            //    Thread.Sleep(10);
+            //}
 
             Console.WriteLine("Главный поток работу закончил!");
             Console.ReadLine();
         }
 
+        private static void PrintMessage(object parameter)
+        {
+            PrintThreadInfo();
+
+            var msg = (string)parameter;
+            var thread_id = Thread.CurrentThread.ManagedThreadId;
+            for(var i = 0; i < 10; i++)
+            {
+                Console.WriteLine($"id:{thread_id}\t{msg}");
+                Thread.Sleep(10);
+            }
+        }
+
         private static void TimerMethod()
         {
             PrintThreadInfo();
+
             while (true)
             {
                 Console.Title = DateTime.Now.ToString("HH:mm:ss.ffff");
