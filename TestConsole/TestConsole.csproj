@@ -47,6 +47,7 @@
     <Compile Include="PrintMessageTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThreadPoolTests.cs" />
     <Compile Include="ThreadTests.cs" />
   </ItemGroup>
   <ItemGroup>
