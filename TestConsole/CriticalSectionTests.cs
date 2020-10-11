@@ -14,7 +14,7 @@ namespace TestConsole
             var manual_reset_event = new ManualResetEvent(false);
             var auto_reset_event = new AutoResetEvent(false);
 
-            EventWaitHandle starter = auto_reset_event;
+            EventWaitHandle starter = manual_reset_event;
 
             for(var i = 0; i < 10; i++)
             {
@@ -23,6 +23,7 @@ namespace TestConsole
                 {
                     Console.WriteLine($"Поток {local_i} запущен");
                     starter.WaitOne();
+                    starter.Reset();
                     Console.WriteLine($"Поток {local_i} завершил свою работу");
                 }).Start();
             }
