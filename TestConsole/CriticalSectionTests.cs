@@ -30,13 +30,27 @@ namespace TestConsole
         {
             for(var i = 0; i < Count; i++)
             {
-                lock (__SyncRoot)
+                //lock (__SyncRoot)
+                //{
+                //    Console.Write($"Thread id:{Thread.CurrentThread.ManagedThreadId}");
+                //    Console.Write("\t");
+                //    Console.Write(Message);
+                //    Console.WriteLine();
+                //}
+
+                Monitor.Enter(__SyncRoot);
+                try
                 {
                     Console.Write($"Thread id:{Thread.CurrentThread.ManagedThreadId}");
                     Console.Write("\t");
                     Console.Write(Message);
                     Console.WriteLine();
                 }
+                finally
+                {
+                    Monitor.Exit(__SyncRoot);
+                }
+
             }
         }
     }
