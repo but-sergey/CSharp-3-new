@@ -43,12 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CriticalSectionTests.cs" />
-    <Compile Include="PrintMessageTask.cs" />
+    <Compile Include="MathTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThreadPoolTests.cs" />
-    <Compile Include="ThreadTests.cs" />
+    <Compile Include="TPLOverview.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
