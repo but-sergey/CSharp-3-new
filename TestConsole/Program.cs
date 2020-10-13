@@ -1,5 +1,4 @@
-﻿using MailSender.lib.Interfaces;
-using MailSender.lib.Service;
+﻿using System;
 
 namespace TestConsole
 {
@@ -7,13 +6,12 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            IEncryptorService cryptor = new Rfc2898Encryptor();
-            var str = "Hello World!";
-            const string password = "MailSender!";
+            //ThreadTests.Start();
+            //CriticalSectionTests.Start();
+            ThreadPoolTests.Start();
 
-            var crypted_str = cryptor.Encrypt(str, password);
-
-            var decrypted_str = cryptor.Decrypt(crypted_str, password);
+            Console.WriteLine("Главный поток работу закончил!");
+            Console.ReadLine();
         }
     }
 }
