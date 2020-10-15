@@ -6,7 +6,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace WpfTest
 {
@@ -17,7 +16,7 @@ namespace WpfTest
 
         private async void OnOpenFileClick(object sender, RoutedEventArgs e)
         {
-            await Task.Yield();
+            await Task.Yield().ConfigureAwait(false);
 
             var dialog = new OpenFileDialog
             {
@@ -70,7 +69,7 @@ namespace WpfTest
                     var line = await reader.ReadLineAsync().ConfigureAwait(false);
                     var words = line.Split(' ');
                     //Thread.Sleep(100);
-                    await Task.Delay(1);
+                    await Task.Delay(1, Cancel).ConfigureAwait(false);
 
                     foreach (var word in words)
                         if (dict.ContainsKey(word))
