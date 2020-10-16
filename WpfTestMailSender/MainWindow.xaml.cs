@@ -6,17 +6,18 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace WpfTest
 {
 
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow() => InitializeComponent();
 
         private async void OnOpenFileClick(object sender, RoutedEventArgs e)
         {
-            await Task.Yield().ConfigureAwait(false);
+            await Task.Yield();
 
             var dialog = new OpenFileDialog
             {
@@ -58,6 +59,12 @@ namespace WpfTest
 
         private static async Task<int> GetWordsCountAsync(string FileName, IProgress<double> Progress = null, CancellationToken Cancel = default)
         {
+            var thread_id = Thread.CurrentThread.ManagedThreadId;
+
+            await Task.Yield().ConfigureAwait(false);
+
+            var thread_id2 = Thread.CurrentThread.ManagedThreadId;
+
             var dict = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             Cancel.ThrowIfCancellationRequested();
@@ -69,7 +76,7 @@ namespace WpfTest
                     var line = await reader.ReadLineAsync().ConfigureAwait(false);
                     var words = line.Split(' ');
                     //Thread.Sleep(100);
-                    await Task.Delay(1, Cancel).ConfigureAwait(false);
+                    //await Task.Delay(1, Cancel).ConfigureAwait(false);
 
                     foreach (var word in words)
                         if (dict.ContainsKey(word))
@@ -80,6 +87,12 @@ namespace WpfTest
                     Progress?.Report(reader.BaseStream.Position / (double)reader.BaseStream.Length);
                 }
             }
+
+            var thread_id3 = Thread.CurrentThread.ManagedThreadId;
+
+            await App.Current.Dispatcher;
+
+            var thread_id4 = Thread.CurrentThread.ManagedThreadId;
 
             return dict.Count;
         }
