@@ -3,7 +3,7 @@ using TestConsoleCore.Data.Entities;
 
 namespace TestConsoleCore.Data
 {
-    class StudentsDB : DbContext
+    public class StudentsDB : DbContext
     {
         public DbSet<Student> Students { get; set; }
 
