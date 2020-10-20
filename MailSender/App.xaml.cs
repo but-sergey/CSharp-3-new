@@ -1,6 +1,5 @@
 ﻿using MailSender.Data;
 using MailSender.Data.Stores.InDB;
-using MailSender.Data.Stores.InMemory;
 using MailSender.lib.Interfaces;
 using MailSender.lib.Models;
 using MailSender.lib.Service;
@@ -52,7 +51,10 @@ namespace MailSender
 
             //services.AddSingleton<IStore<Recipient>, RecipientsStoreInMemory>();
             services.AddSingleton<IStore<Recipient>, RecipientsStoreInDB>();
-            // ...
+            services.AddSingleton<IStore<Sender>, SendersStoreInDB>();
+            services.AddSingleton<IStore<Server>, ServersStoreInDB>();
+            services.AddSingleton<IStore<Message>, MessagesStoreInDB>();
+            services.AddSingleton<IStore<SchedulerTask>, SchedulerTasksStoreInDB>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
