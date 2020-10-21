@@ -4,12 +4,15 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestConsoleCore
 {
+    [Description("Main program")]
     class Program
     {
-        static async Task Main(string[] args)
+        static async Task Main([Required] string[] args)
         {
             Assembly asm = Assembly.GetEntryAssembly();
 
@@ -90,6 +93,16 @@ namespace TestConsoleCore
 
             compiled_expression("QWE");
             compiled_expression2("RTY");
+
+            var program_type = typeof(Program);
+
+            var description = program_type.GetCustomAttribute<DescriptionAttribute>()?.Description;
+
+            var program_main = program_type.GetMethod("Main", BindingFlags.NonPublic | BindingFlags.Static);
+
+            var program_main_args = program_main.GetParameters()[0];
+
+            var is_required = program_main_args.GetCustomAttribute<RequiredAttribute>() != null;
 
             Console.ReadLine();
         }
