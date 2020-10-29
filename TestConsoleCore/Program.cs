@@ -1,87 +1,115 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
-using TestConsoleCore.Data;
-using TestConsoleCore.Data.Entities;
+using System.Linq.Expressions;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestConsoleCore
 {
+    [Description("Main program")]
     class Program
     {
-        static async Task Main(string[] args)
+        static async Task Main([Required] string[] args)
         {
-            const string connection_str = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Students.DB;Integrated Security=True";
+            Assembly asm = Assembly.GetEntryAssembly();
 
+            Type type = asm.GetType("TestConsoleCore.Program");
+            Type type2 = asm.GetTypes().First(t => t.Name == "Program");
 
-            //var service_collection = new ServiceCollection();
-            //service_collection.AddDbContext<StudentsDB>(opt => opt.UseSqlServer(connection_str));
+            var str = "Hello World!";
 
-            //var services = service_collection.BuildServiceProvider();
+            var type3 = GetObjectType(str);
 
-            //using (var db = services.GetRequiredService<StudentsDB>())
+            var type_string = typeof(string);
+
+            var test_lib_file = new FileInfo("TestLib.dll");
+            var test_lib_assembly = Assembly.LoadFile(test_lib_file.FullName);
+
+            var printer_type = test_lib_assembly.GetType("TestLib.Printer");
+
+            //ConstructorInfo
+            //MethodInfo
+            //PropertyInfo
+            //EventInfo
+            //FieldInfo
+
+            foreach (var method in printer_type.GetMethods())
+            {
+                var return_type = method.ReturnType;
+                var parameters = method.GetParameters();
+
+                Console.WriteLine("{0} {1}({2})",
+                    return_type.Name,
+                    method.Name,
+                    string.Join(", ", parameters.Select(p => $"{p.ParameterType.Name} {p.Name}")));
+            }
+
+            object printer = Activator.CreateInstance(printer_type, ">>>");
+
+            var printer_constructor = printer_type.GetConstructor(new[] { typeof(string) });
+
+            var printer2 = printer_constructor.Invoke(new object[] { "<<<" });
+
+            var print_method_info = printer_type.GetMethod("Print");
+
+            print_method_info.Invoke(printer, new object[] { "Hello World!" });
+
+            var prefix_field_info = printer_type.GetField("_Prefix", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            object prefix_value_object = prefix_field_info.GetValue(printer);
+            var prefix_value_string = (string)prefix_field_info.GetValue(printer);
+
+            prefix_field_info.SetValue(printer, "123");
+
+            //var app_domain = AppDomain.CurrentDomain;
+            //var test_domain = AppDomain.CreateDomain("TestDomain");
+            //test_domain.ExecuteAssemblyByName();
+            //AppDomain.Unload(test_domain);
+
+            //var admin_process_info = new ProcessStartInfo(Assembly.GetEntryAssembly().Location, "/RegistryWrite")
             //{
+            //};
+            //Process process = Process.Start(admin_process_info);
 
-            //}
+            dynamic dynamic_printer = printer;
+            dynamic_printer.Print("111222333");
 
-            using (var db = new StudentsDB(new DbContextOptionsBuilder<StudentsDB>().UseSqlServer(connection_str).Options))
-            {
-                //await db.Database.EnsureCreatedAsync();
-                await db.Database.MigrateAsync();
-                
-                var students_count = await db.Students.CountAsync();
-                Console.WriteLine($"Число студентов в БД = {students_count}");
-            }
+            Action<string> print_lambda = str => Console.WriteLine(str);
 
-            using (var db = new StudentsDB(new DbContextOptionsBuilder<StudentsDB>().UseSqlServer(connection_str).Options))
-            {
-                var k = 0;
-                if(await db.Students.CountAsync() == 0)
-                {
-                    for (var i = 0; i < 10; i++)
-                    {
-                        var group = new Group
-                        {
-                            Name = $"Группа {i}",
-                            Description = $"Описание группы {i}",
-                            Students = new List<Student>()
-                        };
+            Expression<Action<string>> print_expression = str => Console.WriteLine(str);
 
-                        for (var j = 0; j < 10; j++)
-                        {
-                            var student = new Student
-                            {
-                                Name = $"Студент {k}",
-                                Surname = $"Surname {k}",
-                                Patronymic = $"Patronymic {k}",
-                            };
-                            k++;
-                            group.Students.Add(student);
-                        }
+            Action<string> compiled_expression = print_expression.Compile();
 
-                        await db.Groups.AddAsync(group);
-                    }
+            ParameterExpression str_parameter = Expression.Parameter(typeof(string), "str");
 
-                    await db.SaveChangesAsync();
-                }
-            }
+            var invoke_node = Expression.Call(null, typeof(Console).GetMethod("WriteLine", new[] { typeof(string) }), str_parameter);
 
-            using (var db = new StudentsDB(new DbContextOptionsBuilder<StudentsDB>().UseSqlServer(connection_str).Options))
-            {
-                var students = await db.Students
-                    .Include(s => s.Group)
-                    .Where(s => s.Group.Name == "Группа 5")
-                    .ToArrayAsync();
+            var result_expression = Expression.Lambda<Action<string>>(invoke_node, str_parameter);
 
-                foreach(var student in students)
-                {
-                    Console.WriteLine($"[{student.Id}] {student.Name} - {student.Group.Name}");
-                }
-            }
+            Action<string> compiled_expression2 = result_expression.Compile();
 
-            Console.WriteLine("Главный поток работу закончил!");
+            compiled_expression("QWE");
+            compiled_expression2("RTY");
+
+            var program_type = typeof(Program);
+
+            var description = program_type.GetCustomAttribute<DescriptionAttribute>()?.Description;
+
+            var program_main = program_type.GetMethod("Main", BindingFlags.NonPublic | BindingFlags.Static);
+
+            var program_main_args = program_main.GetParameters()[0];
+
+            var is_required = program_main_args.GetCustomAttribute<RequiredAttribute>() != null;
+
             Console.ReadLine();
+        }
+
+        private static Type GetObjectType(object obj)
+        {
+            return obj.GetType();
         }
     }
 }
