@@ -3,12 +3,15 @@ using MailSender.lib.Interfaces;
 using MailSender.lib.Models;
 using MailSender.ViewModels.Base;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MailSender.ViewModels
 {
     partial class MainWindowViewModel : ViewModel
     {
         private readonly IMailService _MailService;
+
+        private readonly IStore<Recipient> _RecipientsStore;
 
         private string _Title = "Тестовое окно";
 
@@ -73,14 +76,14 @@ namespace MailSender.ViewModels
             set => Set(ref _SelectedMessage, value);
         }
 
-        public MainWindowViewModel(IMailService MailService)
+        public MainWindowViewModel(IMailService MailService, IStore<Recipient> RecipientsStore)
         {
             _MailService = MailService;
+            _RecipientsStore = RecipientsStore;
             Servers = new ObservableCollection<Server>(TestData.Servers);
             Senders = new ObservableCollection<Sender>(TestData.Senders);
-            Recipients = new ObservableCollection<Recipient>(TestData.Recipients);
+            Recipients = new ObservableCollection<Recipient>(RecipientsStore.GetAll());
             Messages = new ObservableCollection<Message>(TestData.Messages);
-
         }
     }
 }
